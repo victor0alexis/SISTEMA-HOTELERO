@@ -1,0 +1,45 @@
+-- Tabla Hotel
+CREATE TABLE Hotel (
+    ID_Hotel SERIAL PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Direccion VARCHAR(150),
+    Telefono VARCHAR(20)
+);
+
+-- Tabla Habitacion
+CREATE TABLE Habitacion (
+    ID_Habitacion SERIAL PRIMARY KEY,
+    Precio DECIMAL(10, 2) NOT NULL,
+    Estado VARCHAR(30),
+    Tipo VARCHAR(50),
+    ID_Hotel INT REFERENCES Hotel(ID_Hotel)
+);
+
+-- Tabla Huesped
+CREATE TABLE Huesped (
+    ID_Huesped SERIAL PRIMARY KEY,
+    Nombres VARCHAR(100) NOT NULL,
+    Apellidos VARCHAR(100),
+    RUn VARCHAR(20) UNIQUE,
+    Telefono VARCHAR(20),
+    Ciudad VARCHAR(50),
+    Email VARCHAR(100)
+);
+
+-- Tabla Reserva
+CREATE TABLE Reserva (
+    ID_Reserva SERIAL PRIMARY KEY,
+    Fecha_Entrada DATE NOT NULL,
+    Fecha_Salida DATE NOT NULL,
+    Estado VARCHAR(30),
+    ID_Huesped INT REFERENCES Huesped(ID_Huesped),
+    ID_Habitacion INT REFERENCES Habitacion(ID_Habitacion)
+);
+
+-- Tabla Pago 
+CREATE TABLE Pago (
+    ID_Pago SERIAL PRIMARY KEY,
+    Monto DECIMAL(10, 2) NOT NULL,
+    Fecha_Pago DATE NOT NULL,
+    ID_Reserva INT UNIQUE REFERENCES Reserva(ID_Reserva)
+);
